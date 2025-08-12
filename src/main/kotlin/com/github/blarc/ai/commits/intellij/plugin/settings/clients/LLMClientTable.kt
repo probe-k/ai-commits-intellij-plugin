@@ -142,7 +142,7 @@ class LLMClientTable {
                 // TODO(@Blarc): Is there a better way to create the list of all possible LLM Clients that implement LLMClient abstract class
                 listOf(
                     ClaudeClientConfiguration(),
-                    CustomCliConfiguration()
+//                    CustomCliConfiguration()
                 ).sortedBy { it.getClientName() }
             } else {
                 listOf(newLLMClientConfiguration)

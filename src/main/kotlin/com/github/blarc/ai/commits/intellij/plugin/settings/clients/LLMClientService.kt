@@ -8,7 +8,6 @@ import com.github.blarc.ai.commits.intellij.plugin.notifications.Notification
 import com.github.blarc.ai.commits.intellij.plugin.notifications.sendNotification
 import com.github.blarc.ai.commits.intellij.plugin.settings.AppSettings2
 import com.github.blarc.ai.commits.intellij.plugin.settings.ProjectSettings
-//import com.github.blarc.ai.commits.intellij.plugin.settings.clients.mistral.MistralAIClientSharedState
 import com.github.blarc.ai.commits.intellij.plugin.wrap
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.application.EDT
@@ -16,8 +15,6 @@ import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.application.asContextElement
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.ComboBox
-import com.intellij.openapi.ui.naturalSorted
 import com.intellij.openapi.vcs.changes.Change
 import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.intellij.ui.components.JBLabel

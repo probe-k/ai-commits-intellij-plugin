@@ -45,13 +45,13 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
     @XCollection(
         elementTypes = [
             ClaudeClientConfiguration::class,
-            CustomCliConfiguration::class
+//            CustomCliConfiguration::class
         ],
         style = XCollection.Style.v2
     )
     var llmClientConfigurations = setOf<LLMClientConfiguration>(
         ClaudeClientConfiguration(),
-        CustomCliConfiguration()
+//        CustomCliConfiguration()
     )
 
     @Attribute
