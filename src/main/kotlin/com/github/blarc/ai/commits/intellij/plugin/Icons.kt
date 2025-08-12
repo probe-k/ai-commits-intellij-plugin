@@ -18,17 +18,8 @@ object Icons {
     }
 
     val AI_COMMITS = AICommitsIcon("/icons/aiCommits15.svg", null)
-    val OPEN_AI = AICommitsIcon("/icons/openai15bright.svg", "/icons/openai15dark.svg")
-    val OLLAMA = AICommitsIcon("/icons/ollama15bright.svg", "/icons/ollama15dark.svg")
-    val QIANFAN = AICommitsIcon("/icons/qianfan.png", null)
-    val GEMINI_VERTEX = AICommitsIcon("/icons/geminiVertex.svg", null)
-    val GEMINI_GOOGLE = AICommitsIcon("/icons/geminiGoogle.svg", null)
-    val ANTHROPIC = AICommitsIcon("/icons/anthropic15bright.svg", "/icons/anthropic15dark.svg")
-    val AZURE_OPEN_AI = AICommitsIcon("/icons/azureOpenAi.svg", null)
     val HUGGING_FACE = AICommitsIcon("/icons/huggingface.svg", null)
-    val GITHUB = AICommitsIcon("/icons/github15bright.svg", "/icons/github15dark.svg")
-    val MISTRAL = AICommitsIcon("/icons/mistral.svg", null)
-    val AMAZON_BEDROCK = AICommitsIcon("/icons/amazonBedrock15.svg", "/icons/amazonBedrock15.svg")
+    val CLAUDE = AICommitsIcon("/icons/claude-ai-icon.svg", "/icons/claude-ai-icon.svg")
 
     object Process {
         val STOP = AICommitsIcon("/icons/stop.svg", "/icons/stop_dark.svg")

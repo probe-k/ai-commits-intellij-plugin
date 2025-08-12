@@ -14,55 +14,38 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-        <p>AI Commits is a plugin that generates your commit messages by using git diff and LLMs.</p>
+        <p>AI Commits is a plugin that generates your commit messages by using git diff and CLI-based LLM tools.</p>
         <h3>Features</h3>
         <ul>
-            <li>Generate commit message from git diff using LLM</li>
+            <li>Generate commit message from git diff using CLI-based LLM tools</li>
             <li>Compute diff only from the selected files and lines in the commit dialog</li>
             <li>Create your own prompt for commit message generation</li>
             <li>Use predefined variables and hint to customize your prompt</li>
-            <li>Supports Git and Subversion as version control systems.</li>
+            <li>Supports Git as version control systems.</li>
         </ul>
-        <h3>Supported models</h3>
+        <h3>Supported CLI tools</h3>
         <ul>
-            <li>Amazon Bedrock</li>
-            <li>Anthropic</li>
-            <li>Azure Open AI</li>
-            <li>Gemini Google AI</li>
-            <li>Gemini Vertex AI</li>
-            <li>GitHub Models</li>
-            <li>Hugging Face</li>
-            <li>Mistral AI</li>
-            <li>Open AI</li>
-            <li>Ollama</li>
-            <li>Qianfan (Ernie)</li>
+            <li>Claude CLI</li>
+            <li>Custom CLI - configure any command-line LLM tool by specifying the command</li>
         </ul>
-        <p>The plugin is implemented in a generic way and uses <a href="https://github.com/langchain4j/langchain4j">langchain4j</a>
-        for creating LLM API clients. If you would like to use some other LLM model that is supported by langchain4j,
+        <p>The plugin works by executing CLI commands to interact with various LLM services.
+        With the Custom CLI option, you can configure any command-line tool by simply providing the command to execute.
+        This approach provides maximum flexibility and allows you to use your preferred CLI tools and configurations.
+        If you would like to add built-in support for specific CLI tools,
         please make a feature request in GitHub issues.</p>
         <h3>Usage</h3>
-        <p>To get started, install the plugin and set LLM client configuration in plugin's settings::
+        <p>To get started, install the plugin, ensure your preferred LLM CLI tool is installed and configured,
+        then set the CLI client configuration in plugin's settings:
         <br/>
-        Settings > Tools > AI Commits</p>
+        Settings > Tools > AI Commits
+        <br/>
+        For Custom CLI, simply specify the command that should be executed to generate commit messages.</p>
+        <h3>Requirements</h3>
+        <p>Make sure you have the CLI tool for your chosen LLM service installed and properly configured
+        on your system before using the plugin.</p>
         <h3>Troubleshooting</h3>
         <p>We'd love to hear from you if you have any issues or feature requests. Please report them
-        <a href="https://github.com/Blarc/ai-commits-intellij-plugin/issues">here</a>.</p>
-        <h3>Demo</h3>
-        <p>
-            <img
-            src="https://raw.githubusercontent.com/Blarc/ai-commits-intellij-plugin/dc45b4533e432ddde531c1a13bc9397c17d240ad/screenshots/plugin.gif"
-            border="0"
-            width="600"
-            alt="Demo.gif"/>
-        </p>
-        <h3>Support</h3>
-        <ul>
-            <li><a href="https://github.com/Blarc/ai-commits-intellij-plugin">Star the repository</a></li>
-            <li><a href="https://ko-fi.com/blarc">Buy me a coffee</a></li>
-            <li><a href="https://plugins.jetbrains.com/plugin/21335-ai-commits">Rate the plugin</a></li>
-            <li><a href="https://plugins.jetbrains.com/plugin/21335-ai-commits">Share the plugin</a></li>
-            <li><a href="https://github.com/sponsors/Blarc">Sponsor me</a></li>
-        </ul>
+        <a href="probe.k@kakaoent.com">here</a>.</p>
     ]]></description>
 
     <!-- Product and plugin compatibility requirements.

@@ -1,25 +1,12 @@
 package com.github.blarc.ai.commits.intellij.plugin.settings
 
 import com.github.blarc.ai.commits.intellij.plugin.AICommitsUtils
-import com.github.blarc.ai.commits.intellij.plugin.AICommitsUtils.getCredentialAttributes
 import com.github.blarc.ai.commits.intellij.plugin.notifications.Notification
 import com.github.blarc.ai.commits.intellij.plugin.notifications.sendNotification
 import com.github.blarc.ai.commits.intellij.plugin.settings.clients.LLMClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.amazonBedrock.AmazonBedrockClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.anthropic.AnthropicClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.azureOpenAi.AzureOpenAiClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.geminiGoogle.GeminiGoogleClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.geminiVertex.GeminiClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.githubModels.GitHubModelsClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.huggingface.HuggingFaceClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.mistral.MistralAIClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.ollama.OllamaClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.openAi.OpenAiClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.openAi.OpenAiClientSharedState
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.qianfan.QianfanClientConfiguration
+import com.github.blarc.ai.commits.intellij.plugin.settings.clients.claude.ClaudeClientConfiguration
+import com.github.blarc.ai.commits.intellij.plugin.settings.clients.custom.CustomCliConfiguration
 import com.github.blarc.ai.commits.intellij.plugin.settings.prompts.DefaultPrompts
-import com.intellij.credentialStore.CredentialAttributes
-import com.intellij.ide.passwordSafe.PasswordSafe
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
@@ -53,26 +40,18 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
     var lastVersion: String? = null
 
     @OptionTag(converter = LocaleConverter::class)
-    var locale: Locale = Locale.ENGLISH
+    var locale: Locale = Locale.KOREAN
 
     @XCollection(
         elementTypes = [
-            OpenAiClientConfiguration::class,
-            OllamaClientConfiguration::class,
-            QianfanClientConfiguration::class,
-            GeminiClientConfiguration::class,
-            GeminiGoogleClientConfiguration::class,
-            AnthropicClientConfiguration::class,
-            AzureOpenAiClientConfiguration::class,
-            HuggingFaceClientConfiguration::class,
-            GitHubModelsClientConfiguration::class,
-            MistralAIClientConfiguration::class,
-            AmazonBedrockClientConfiguration::class
+            ClaudeClientConfiguration::class,
+            CustomCliConfiguration::class
         ],
         style = XCollection.Style.v2
     )
     var llmClientConfigurations = setOf<LLMClientConfiguration>(
-        OpenAiClientConfiguration()
+        ClaudeClientConfiguration(),
+        CustomCliConfiguration()
     )
 
     @Attribute
@@ -97,48 +76,7 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
 
     override fun noStateLoaded() {
         val appSettings = AppSettings.instance
-        migrateSettingsFromVersion1(appSettings)
-        val openAiLlmClient = llmClientConfigurations.find { it.getClientName() == OpenAiClientConfiguration.CLIENT_NAME }
-        migrateOpenAiClientFromVersion1(openAiLlmClient as OpenAiClientConfiguration, appSettings)
-    }
-
-    private fun migrateSettingsFromVersion1(appSettings: AppSettings) {
-        hits = appSettings.hits
-        locale = appSettings.locale
-        lastVersion = appSettings.lastVersion
-        requestSupport = appSettings.requestSupport
-        prompts = appSettings.prompts
-        activePrompt = appSettings.currentPrompt
-        appExclusions = appSettings.appExclusions
-    }
-
-    private fun migrateOpenAiClientFromVersion1(openAiLlmClientConfiguration: OpenAiClientConfiguration?, appSettings: AppSettings) {
-        openAiLlmClientConfiguration?.apply {
-            host = appSettings.openAIHost
-            appSettings.openAISocketTimeout.toIntOrNull()?.let { timeout = it }
-            modelId = appSettings.openAIModelId
-            temperature = appSettings.openAITemperature
-
-            val credentialAttributes = getCredentialAttributes(appSettings.openAITokenTitle)
-            migrateToken(credentialAttributes)
-        }
-
-        OpenAiClientSharedState.getInstance().hosts.addAll(appSettings.openAIHosts)
-        OpenAiClientSharedState.getInstance().modelIds.addAll(appSettings.openAIModelIds)
-    }
-
-    private fun OpenAiClientConfiguration.migrateToken(credentialAttributes: CredentialAttributes) {
-        PasswordSafe.instance.getAsync(credentialAttributes)
-            .onSuccess {
-                it?.password?.let { token ->
-                    try {
-                        PasswordSafe.instance.setPassword(getCredentialAttributes(id), token.toString(false))
-                    } catch (e: Exception) {
-                        sendNotification(Notification.unableToSaveToken(e.message))
-                    }
-                    tokenIsStored = true
-                }
-            }
+//        migrateSettingsFromVersion1(appSettings)
     }
 
     fun recordHit() {
@@ -159,13 +97,6 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
     fun getActiveLLMClientConfiguration(activeLLMClientConfigurationId: String?): LLMClientConfiguration? {
         return llmClientConfigurations.find { it.id == activeLLMClientConfigurationId }
             ?: llmClientConfigurations.firstOrNull()
-    }
-
-    fun setActiveLlmClient(newId: String) {
-        // TODO @Blarc: Throw exception if llm client id is not valid
-        llmClientConfigurations.find { it.id == newId }?.let {
-            activeLlmClientId = newId
-        }
     }
 
     class LocaleConverter : Converter<Locale>() {

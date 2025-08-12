@@ -59,22 +59,6 @@ class HintRegexTest {
                     "{Use this hint to improve the commit message: \$hint}\n",
                     "Use this hint to improve the commit message: this is a hint\n"
                 )
-            ),
-            Arguments.of(
-                DefaultPrompts.CONVENTIONAL.prompt.content,
-                "this is a hint",
-                DefaultPrompts.CONVENTIONAL.prompt.content.replace(
-                    "{Use this hint to improve the commit message: \$hint}\n",
-                    "Use this hint to improve the commit message: this is a hint\n"
-                )
-            ),
-            Arguments.of(
-                DefaultPrompts.EMOJI.prompt.content,
-                "this is a hint",
-                DefaultPrompts.EMOJI.prompt.content.replace(
-                    "{Use this hint to improve the commit message: \$hint}\n",
-                    "Use this hint to improve the commit message: this is a hint\n"
-                )
             )
         )
     }

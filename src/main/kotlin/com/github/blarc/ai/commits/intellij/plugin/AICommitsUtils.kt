@@ -47,7 +47,7 @@ object AICommitsUtils {
     fun constructPrompt(promptContent: String, diff: String, branch: String?, hint: String?, project: Project): String {
         var content = promptContent
         val locale = project.service<ProjectSettings>().locale
-        content = content.replace("{locale}", locale.getDisplayLanguage(Locale.ENGLISH))
+        content = content.replace("{locale}", locale.getDisplayLanguage(Locale.KOREAN))
         content = replaceBranch(content, branch)
         content = replaceHint(content, hint)
 

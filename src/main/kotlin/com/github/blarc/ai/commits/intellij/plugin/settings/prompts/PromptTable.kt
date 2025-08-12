@@ -169,13 +169,6 @@ class PromptTable(private val cs: CoroutineScope) {
                     .bindText(prompt::description)
                     .validationOnApply { notBlank(it.text) }
             }
-            row(message("settings.prompt.hint")) {
-                cell(promptHintTextField)
-                    .align(Align.FILL)
-                    .text("This is a hint.")
-                    .onChanged { setPreview(promptContentTextArea.text, it.text) }
-                    .comment(message("settings.prompt.hint.comment"))
-            }
             row {
                 label(message("settings.prompt.content"))
             }

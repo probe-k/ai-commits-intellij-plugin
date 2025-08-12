@@ -1,6 +1,5 @@
 package com.github.blarc.ai.commits.intellij.plugin.settings
 
-import com.github.blarc.ai.commits.intellij.plugin.AICommitsBundle
 import com.github.blarc.ai.commits.intellij.plugin.AICommitsBundle.message
 import com.github.blarc.ai.commits.intellij.plugin.AICommitsUtils
 import com.github.blarc.ai.commits.intellij.plugin.settings.clients.LLMClientConfiguration
@@ -43,10 +42,6 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
             cell(isProjectSpecificLLMClientCheckBox)
                 .bindSelected(project.service<ProjectSettings>()::isProjectSpecificLLMClient)
             contextHelp(message("settings.llmClient.projectSpecific.contextHelp"))
-                .align(AlignX.LEFT)
-            checkBox(message("settings.llmClient.streamingResponse"))
-                .bindSelected(AppSettings2.instance::useStreamingResponse)
-            contextHelp(message("settings.llmClient.streamingResponse.contextHelp"))
                 .align(AlignX.LEFT)
         }
         row {
@@ -101,14 +96,11 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
             comboBox(locales, AICommitsListCellRenderer())
                 .widthGroup("input")
                 .bindItem(
-                    getter = { locales.find { it.language == projectSettings.locale.language } ?: Locale.ENGLISH },
+                    getter = { locales.find { it.language == projectSettings.locale.language } ?: Locale.KOREAN },
                     setter = { setActiveLocale(it)}
                 )
 
             contextHelp(message("settings.locale.contextHelp"))
-
-            browserLink(message("settings.more-prompts"), AICommitsBundle.URL_PROMPTS_DISCUSSION.toString())
-                .align(AlignX.RIGHT)
         }
         row {
             label(message("settings.prompt")).widthGroup("labelPrompt")
@@ -157,13 +149,6 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
             cell(toolbarDecorator.createPanel())
                 .align(Align.FILL)
         }.resizableRow()
-
-        row {
-            browserLink(message("settings.report-bug"), AICommitsBundle.URL_BUG_REPORT.toString())
-            browserLink(message("settings.github-star"), AICommitsBundle.URL_GITHUB.toString())
-            browserLink(message("settings.kofi"), AICommitsBundle.URL_KOFI.toString())
-            browserLink(message("settings.github-sponsors"), AICommitsBundle.URL_GITHUB_SPONSORS.toString())
-        }
     }
 
     private fun setActiveLLMClientConfiguration(llmClientConfiguration: LLMClientConfiguration?) {

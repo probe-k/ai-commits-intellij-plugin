@@ -16,8 +16,6 @@ import javax.swing.Icon
 
 abstract class LLMClientConfiguration(
     @Attribute var name: String,
-    @Attribute var modelId: String,
-    @Attribute var temperature: String,
 ) : Cloneable, Comparable<LLMClientConfiguration>, AnAction() {
 
     @Attribute
@@ -27,23 +25,11 @@ abstract class LLMClientConfiguration(
 
     abstract fun getClientIcon(): Icon
 
-    abstract fun getSharedState(): LLMClientSharedState
+    abstract fun getPath(): String
 
-    fun getHosts(): Set<String> {
-        return getSharedState().hosts
-    }
+    abstract fun getCommand(): String
 
-    fun getModelIds(): Set<String> {
-        return getSharedState().modelIds
-    }
-
-    fun addHost(host: String) {
-        getSharedState().hosts.add(host)
-    }
-
-    fun addModelId(modelId: String) {
-        getSharedState().modelIds.add(modelId)
-    }
+    abstract fun getTimeout(): Int
 
     open fun setCommitMessage(commitWorkflowHandler: AbstractCommitWorkflowHandler<*, *>, prompt: String, result: String) {
         commitWorkflowHandler.setCommitMessage(result)

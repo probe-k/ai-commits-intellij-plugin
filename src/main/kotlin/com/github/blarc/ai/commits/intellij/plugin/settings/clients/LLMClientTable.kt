@@ -3,17 +3,8 @@ package com.github.blarc.ai.commits.intellij.plugin.settings.clients
 import com.github.blarc.ai.commits.intellij.plugin.AICommitsBundle.message
 import com.github.blarc.ai.commits.intellij.plugin.createColumn
 import com.github.blarc.ai.commits.intellij.plugin.settings.AppSettings2
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.amazonBedrock.AmazonBedrockClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.anthropic.AnthropicClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.azureOpenAi.AzureOpenAiClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.geminiGoogle.GeminiGoogleClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.geminiVertex.GeminiClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.githubModels.GitHubModelsClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.huggingface.HuggingFaceClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.mistral.MistralAIClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.ollama.OllamaClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.openAi.OpenAiClientConfiguration
-import com.github.blarc.ai.commits.intellij.plugin.settings.clients.qianfan.QianfanClientConfiguration
+import com.github.blarc.ai.commits.intellij.plugin.settings.clients.claude.ClaudeClientConfiguration
+import com.github.blarc.ai.commits.intellij.plugin.settings.clients.custom.CustomCliConfiguration
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Splitter
@@ -59,8 +50,9 @@ class LLMClientTable {
     private fun createTableModel(): ListTableModel<LLMClientConfiguration> = ListTableModel(
         arrayOf(
             createColumn<LLMClientConfiguration, LLMClientConfiguration>(message("settings.llmClient.name")) { llmClient -> llmClient },
-            createColumn<LLMClientConfiguration, String>(message("settings.llmClient.modelId")) { llmClient -> llmClient.modelId },
-            createColumn(message("settings.llmClient.temperature")) { llmClient -> llmClient.temperature }
+            createColumn<LLMClientConfiguration, String>(message("settings.llmClient.path")) { llmClient -> llmClient.getPath() },
+            createColumn<LLMClientConfiguration, String>(message("settings.llmClient.command")) { llmClient -> llmClient.getCommand() },
+            createColumn<LLMClientConfiguration, Int>(message("settings.llmClient.timeout")) { llmClient -> llmClient.getTimeout() },
         ),
         llmClients.toList()
     )
@@ -149,17 +141,8 @@ class LLMClientTable {
             return if (newLLMClientConfiguration == null) {
                 // TODO(@Blarc): Is there a better way to create the list of all possible LLM Clients that implement LLMClient abstract class
                 listOf(
-                    OpenAiClientConfiguration(),
-                    OllamaClientConfiguration(),
-                    QianfanClientConfiguration(),
-                    GeminiClientConfiguration(),
-                    GeminiGoogleClientConfiguration(),
-                    AnthropicClientConfiguration(),
-                    AzureOpenAiClientConfiguration(),
-                    HuggingFaceClientConfiguration(),
-                    GitHubModelsClientConfiguration(),
-                    MistralAIClientConfiguration(),
-                    AmazonBedrockClientConfiguration()
+                    ClaudeClientConfiguration(),
+                    CustomCliConfiguration()
                 ).sortedBy { it.getClientName() }
             } else {
                 listOf(newLLMClientConfiguration)

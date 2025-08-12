@@ -17,28 +17,18 @@ import java.util.*
     storages = [Storage("AICommit.xml")]
 )
 @Service(Service.Level.APP)
-//@Deprecated("No longer used. Need for migration.")
 class AppSettings : PersistentStateComponent<AppSettings> {
 
-    val openAITokenTitle = "OpenAIToken"
     var hits = 0
 
     @OptionTag(converter = LocaleConverter::class)
-    var locale: Locale = Locale.ENGLISH
+    var locale: Locale = Locale.KOREAN
 
     var requestSupport = true
     var lastVersion: String? = null
-    var openAIHost = "https://api.openai.com/v1"
-    var openAIHosts = mutableSetOf("https://api.openai.com/v1")
-    var openAISocketTimeout = "30"
-    var proxyUrl: String? = null
 
     var prompts = DefaultPrompts.toPromptsMap()
     var currentPrompt = prompts["basic"]!!
-
-    var openAIModelId = "gpt-3.5-turbo"
-    var openAIModelIds = listOf("gpt-3.5-turbo", "gpt-4")
-    var openAITemperature = "0.7"
 
     var appExclusions: Set<String> = setOf()
 

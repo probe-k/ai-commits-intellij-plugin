@@ -77,6 +77,10 @@ tasks {
         dependsOn("patchChangelog")
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
+
+    buildSearchableOptions {
+        enabled = false
+    }
 }
 
 tasks.test {
@@ -84,38 +88,8 @@ tasks.test {
 }
 
 dependencies {
-//    implementation("com.aallam.openai:openai-client:3.7.2") {
-//        exclude(group = "org.slf4j", module = "slf4j-api")
-//        // Prevents java.lang.LinkageError: java.lang.LinkageError: loader constraint violation:when resolving method 'long kotlin.time.Duration.toLong-impl(long, kotlin.time.DurationUnit)'
-//        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-//    }
-//    implementation("io.ktor:ktor-client-cio:2.3.11") {
-//        exclude(group = "org.slf4j", module = "slf4j-api")
-//        // Prevents java.lang.LinkageError: java.lang.LinkageError: loader constraint violation: when resolving method 'long kotlin.time.Duration.toLong-impl(long, kotlin.time.DurationUnit)'
-//        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-//    }
-//
-//    implementation("com.knuddels:jtokkit:1.0.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-
-    // langchain4j integrations
-    implementation(platform("dev.langchain4j:langchain4j-bom:1.2.0"))
-    implementation("dev.langchain4j:langchain4j-open-ai")
-    implementation("dev.langchain4j:langchain4j-ollama")
-    implementation("dev.langchain4j:langchain4j-vertex-ai-gemini")
-    implementation("dev.langchain4j:langchain4j-anthropic")
-    implementation("dev.langchain4j:langchain4j-azure-open-ai")
-    implementation("dev.langchain4j:langchain4j-hugging-face")
-    implementation("dev.langchain4j:langchain4j-google-ai-gemini")
-    implementation("dev.langchain4j:langchain4j-google-ai-gemini")
-    implementation("dev.langchain4j:langchain4j-github-models")
-    implementation("dev.langchain4j:langchain4j-mistral-ai")
-    implementation("dev.langchain4j:langchain4j-bedrock")
-
-    implementation(platform("dev.langchain4j:langchain4j-community-bom:1.2.0-beta8"))
-    // The Baidu Qianfan Large Model Platform, including the ERNIE series, can be accessed at https://docs.langchain4j.dev/integrations/language-models/qianfan/.
-    implementation("dev.langchain4j:langchain4j-community-qianfan")
 
     // tests
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.13.4")
